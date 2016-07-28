@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cdn.peerjs.com/0.3/peer.js"></script>
 
 <body>
-    <div id="connection-list">
+    <div id="p2p-list">
         <div>
             <input id="local-id" type="text" />
             <input id="remote-id" type="text" />
-            <button id="connect-button" type="button" onclick="startConnect()">connect</button>
+            <button id="connect-button" type="button" onclick="connectPeer()">connect</button>
+        </div>
+    </div>
+    <div>
             <input id="send-data" type="text" />
             <button id="send-button" type="button" onclick='sendData()'>send</button>
-        </div>
     </div>
     <div>
         <textarea id="console" rows="10" cols="100"></textarea>
