@@ -4,17 +4,20 @@
 <script type="text/javascript" src="http://cdn.peerjs.com/0.3/peer.js"></script>
 
 <body>
+    <div>
+        <button onclick="addCom()">+</button>
+    </div>
     <div id="p2p-list">
-        <div>
+        <!--<div>
             <input id="local-id" type="text" />
             <input id="remote-id" type="text" />
-            <button id="connect-button" type="button" onclick="connectPeer()">connect</button>
-        </div>
+            <button id="connect-button" onclick="connectPeer()">connect</button>
+        </div>-->
     </div>
-    <div>
+    <!--<div>
             <input id="send-data" type="text" />
             <button id="send-button" type="button" onclick='sendData()'>send</button>
-    </div>
+    </div>-->
     <div>
         <textarea id="console" rows="10" cols="100"></textarea>
     </div> 
@@ -69,6 +72,7 @@
         
         <script src="./draw.js"></script>
         <script src="./connect.js"></script>
+        <script src="./util.js"></script>
 
     </body>
 </html>
