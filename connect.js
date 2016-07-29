@@ -5,9 +5,12 @@ P2P = function (serverKey,
         eventPeerOpen, eventTriggleConnect, eventEmitConnect, 
         eventReceiveData, eventSendData) {
     this.peer = new Peer({key: serverKey, debug: 3});
-    this.conn = undefined;
     this.localId = undefined;
-    this.remoteId = undefined;
+
+    this.conns = {};
+
+    //this.conn = undefined;
+    //this.remoteId = undefined;
     
     this.eventPeerOpen = eventPeerOpen;
     this.eventTriggleConnect = eventTriggleConnect;
@@ -25,17 +28,17 @@ P2P = function (serverKey,
 
     // on receiving a remote peer connection require
     P2PObject.peer.on('connection', function (connection) {
-        P2PObject.conn = connection;
+        var conn = connection;
         
         // on connection open
-        P2PObject.conn.on('open', function() {
-            P2PObject.remoteId = P2PObject.conn.peer;
-            P2PObject.eventTriggleConnect(P2PObject);
+        conn.on('open', function() {
+            P2PObject.conns[conn.peer] = conn;
+            P2PObject.eventTriggleConnect(P2PObject, conn);
         });
         
         // on receiving data
-        P2PObject.conn.on('data', function(data) {
-            P2PObject.eventReceiveData(P2PObject, data);
+        conn.on('data', function(data) {
+            P2PObject.eventReceiveData(P2PObject, conn, data);
         });
     });
 }
@@ -43,25 +46,27 @@ P2P = function (serverKey,
 P2P.prototype = {
     // on sending a remoite peer connection require
     connect : function (remotePeerId) {
-        this.conn = this.peer.connect(remotePeerId);
+        var conn = this.peer.connect(remotePeerId);
         
         var P2PObject = this;
         
         // on connection open
-        this.conn.on('open', function() {
-            P2PObject.remoteId = P2PObject.conn.peer;
-            P2PObject.eventEmitConnect(this);
+        conn.on('open', function() {
+            P2PObject.conns[conn.peer] = conn;
+            P2PObject.eventEmitConnect(this, conn);
         });
         
         // on receiving data
-        this.conn.on('data', function(data) {
-            P2PObject.eventReceiveData(P2PObject, data);
+        conn.on('data', function(data) {
+            P2PObject.eventReceiveData(P2PObject, conn, data);
         });
     },
     
     // on sending data
     send : function(data) {
-        this.conn.send(data);
+        for (remoteId in this.conns) {
+            this.conns[remoteId].send(data);
+        }
         this.eventSendData(this, data);
     }
 };

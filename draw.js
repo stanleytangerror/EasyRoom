@@ -114,17 +114,13 @@ canvas.onmousedown = function(e) {
     // myPencil.lastX = e.pageX - this.offsetLeft;
     // myPencil.lastY = e.pageY - this.offsetTop;
     var msg = new Message('start', e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-    p2plist.forEach(function(p2p, i) {
-        p2p.send(JSON.stringify(msg));
-    });
+    p2p.send(JSON.stringify(msg));
     drawStart(ctx, myPencil, msg);
 };
 
 canvas.onmouseup = function(e){
     var msg = new Message('end', e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-    p2plist.forEach(function(p2p, i) {
-        p2p.send(JSON.stringify(msg));
-    });
+    p2p.send(JSON.stringify(msg));
     drawEnd(ctx, myPencil);
 }
 
@@ -132,9 +128,7 @@ canvas.onmousemove = function(e) {
     if (!myPencil.painting) return;
     
     var msg = new Message('draw', e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-    p2plist.forEach(function(p2p, i) {
-        p2p.send(JSON.stringify(msg));
-    });
+    p2p.send(JSON.stringify(msg));
     drawOperate(ctx, myPencil, msg);
 
 }

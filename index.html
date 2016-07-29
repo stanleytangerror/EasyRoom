@@ -5,9 +5,13 @@
 
 <body>
     <div>
-        <button onclick="addCom()">+</button>
+        <span id="local-id"></span>
     </div>
-    <div id="p2p-list">
+    <div>
+        <input id="remote-id" type="text" />        
+        <button onclick="connectPeer()">+</button>
+    </div>
+    <div id="connect-list">
         <!--<div>
             <input id="local-id" type="text" />
             <input id="remote-id" type="text" />
