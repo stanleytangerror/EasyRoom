@@ -12,8 +12,8 @@ var p2plist = [];
 // }
 
 function connectPeer(com) {
-    var remoteid = com.parent().find('[name=remote-id]').val();
-    var connNo = com.parent().find('[name=connect-id]').val();
+    var remoteid = com.parent().find('[class=remote-id]').val();
+    var connNo = com.parent().find('[class=connect-id]').val();
     var p2p = p2plist[connNo];
     p2p.connect(remoteid);
 }
@@ -21,11 +21,11 @@ function connectPeer(com) {
 function newConnection(com) {
     var p2p = new P2P('0kl9mk3ed0gj5rk9', 
         function(p2p) {
-            com.find('[name=local-id]').val(p2p.localId);
+            com.find('[class=local-id]').val(p2p.localId);
         },
         function(p2p) {
             print('connection established');
-            com.find('[name=remote-id]').val(p2p.remoteId);        
+            com.find('[class=remote-id]').val(p2p.remoteId);        
         },
         function() {
             print('connection established');
@@ -47,10 +47,10 @@ function addCom() {
     var count = $('#p2p-list > div').length;
     var newCom = 
     $('<div>\
-        <input name="local-id" type="text" />\
-        <input name="remote-id" type="text" />\
-        <input name="connect-id" type="hidden" val="' + count + '"/>\
-        <button name="connect-button" type="button" onclick="connectPeer($(this))">connect</button>\
+        <input class="local-id" type="text" />\
+        <input class="remote-id" type="text" />\
+        <input class="connect-id" type="hidden" value="' + count + '"/>\
+        <button class="connect-button" type="button" onclick="connectPeer($(this))">connect</button>\
        </div>');
     newCom.appendTo('#p2p-list');
     
