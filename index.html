@@ -5,13 +5,14 @@
 
 <body>
     <div>
-        <span id="local-id"></span>
+        <input id="remote-id" type="text" placeholder="connect to remote peer"/>        
+        <button onclick="connectPeer()">Connect</button>
     </div>
     <div>
-        <input id="remote-id" type="text" />        
-        <button onclick="connectPeer()">+</button>
+        Local ID: <span id="local-id"></span>
     </div>
     <div id="connect-list">
+        <span>Online peers:</span>
         <!--<div>
             <input id="local-id" type="text" />
             <input id="remote-id" type="text" />

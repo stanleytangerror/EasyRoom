@@ -46,7 +46,6 @@ function addCom(remoteId) {
     var newCom = 
     $('<div>\
         <span>' + remoteId + '</span>\
-        <button class="connect-button" type="button" onclick="">disconnect</button>\
        </div>');
     newCom.appendTo('#connect-list');
 }
