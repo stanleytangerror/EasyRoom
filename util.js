@@ -11,30 +11,28 @@ var p2p = new P2P('0kl9mk3ed0gj5rk9',
     function (p2p, conn) {
         print('connection established');
         addCom(conn.peer);
+        addPencil(conn.peer);
     },
     // on emit connection
     function (p2p, conn) {
         print('connection established');
         $('#remote-id').val('');
         addCom(conn.peer);
+        addPencil(conn.peer);
     },
     // on receive data
     function (p2p, conn, data) {
-        print(conn.remoteId + ': ' + data);
-        drawCallback(data);
+        print(conn.peer + ': ' + data);
+        var message = JSON.parse(data);
+        drawCallback(conn, message);
+        chatCallback(conn, message);
     },
     // on send data
     function (p2p, data) {
         // $('#send-data').val('');
-        print('local: ' + data);
+        print('local(' + p2p.localId + '): ' + data);
     }
 );
-// function sendData() {
-//     var data = $('#send-data').val();
-//     p2plist.forEach(function (i, p2p) {
-//         p2p.send(data);
-//     });
-// }
 
 function connectPeer() {
     var remoteId = $('#remote-id').val();

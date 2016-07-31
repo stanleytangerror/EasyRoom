@@ -10,16 +10,13 @@ Pencil = function(lastX, lastY, curX, curY, lineThickness) {
     this.curX = curX;
     this.curY = curY;
     this.lineThickness = lineThickness;
+    this.painting = false;
 }
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-// var painting = false;
-// var lastX = 0;
-// var lastY = 0;
-// var lineThickness = 1;
 var myPencil = new Pencil(0, 0, 0, 0, 1);
-var theirPencil = new Pencil(0, 0, 0, 0, 1);
+var theirPencils = {};
 
 canvas.width = canvas.height = 600;
 ctx.fillRect(0, 0, 600, 600);
@@ -27,6 +24,10 @@ ctx.fillRect(0, 0, 600, 600);
 //////////////////////////
 // pencil state api
 //////////////////////////
+
+function addPencil(remoteId) {
+    theirPencils[remoteId] = new Pencil(0, 0, 0, 0, 1);
+}
 
 function drawStart(context, pencil, msg) {
     pencil.painting = true;
@@ -137,21 +138,19 @@ canvas.onmousemove = function(e) {
 // remote pencil events
 //////////////////////////
 
-function drawCallback(msg) {
-    var message = JSON.parse(msg);
+function drawCallback(conn, message) {
+    var pencil = theirPencils[conn.peer];
     switch (message.op) {
         case 'draw':
-            // theirPencil.curX = message.x;
-            // theirPencil.curY = message.y;
-            drawOperate(ctx, theirPencil, message);
+            drawOperate(ctx, pencil, message);
             break;
 
         case 'start':
-            drawStart(ctx, theirPencil, message);
+            drawStart(ctx, pencil, message);
             break;
             
         case 'end':
-            drawEnd(ctx, theirPencil);
+            drawEnd(ctx, pencil);
             break;
             
         default:
