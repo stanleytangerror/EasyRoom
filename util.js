@@ -43,7 +43,7 @@ function addCom(remoteId) {
     if ($('#connect-list').find('span:contains(' + remoteId + ')').length > 0) return ;
     var newCom = 
     $('<div>\
-        <span>' + remoteId + '</span>\
+        <span> >' + remoteId + '</span>\
        </div>');
     newCom.appendTo('#connect-list');
 }
